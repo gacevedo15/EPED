@@ -1,5 +1,6 @@
 package es.uned.lsi.eped.pract2022_2023;
 
+import es.uned.lsi.eped.DataStructures.IteratorIF;
 import es.uned.lsi.eped.DataStructures.List;
 import es.uned.lsi.eped.DataStructures.SequenceIF;
 
@@ -18,9 +19,10 @@ public class StockSequence implements StockIF {
 	 * devuelve el valor -1.
 	 */
 	public int retrieveStock(String p) {
-		for (int i = 1; i <= this.stock.size(); i++) {
-			StockPair pair = ((List<StockPair>) this.stock).get(i); // cast a List<StockPair>
-			if (pair.getProducto().equals(p)) {
+		IteratorIF<StockPair> iterator = stock.iterator();
+		while(iterator.hasNext()) {
+			StockPair pair = iterator.getNext();
+			if(pair.getProducto().equals(p)) {
 				return pair.getUnidades();
 			}
 		}
@@ -33,15 +35,16 @@ public class StockSequence implements StockIF {
 	 * el nuevo valor substituye al anterior.
 	 */
 	public void updateStock(String p, int u) {
-		for (int i = 1; i <= this.stock.size(); i++) {
-			StockPair pair = ((List<StockPair>) this.stock).get(i); // cast a List<StockPair>
-			if (pair.getProducto().equals(p)) {
+		IteratorIF<StockPair> iterator = stock.iterator();
+		while(iterator.hasNext()) {
+			StockPair pair = iterator.getNext();
+			if(pair.getProducto().equals(p)) {
 				pair.setUnidades(u);
 				return;
 			}
 		}
 		StockPair newPair = new StockPair(p, u);
-		((List<StockPair>) this.stock).insert(this.getIndex(newPair), newPair);
+		((List<StockPair>) this.stock).insert(getIndex(newPair), newPair);
 	}
 
 	/* Devuelve una secuencia de todos los pares <p,u>
@@ -53,8 +56,9 @@ public class StockSequence implements StockIF {
 	 */
 	public SequenceIF<StockPair> listStock(String prefix) {
 		List<StockPair> stockPairs = new List<StockPair>();
-		for (int i = 1; i <= this.stock.size(); i++) {
-			StockPair pair = ((List<StockPair>) this.stock).get(i); // cast a List<StockPair>
+		IteratorIF<StockPair> iterator = stock.iterator();
+		while(iterator.hasNext()) {
+			StockPair pair = iterator.getNext();
 			if (pair.getProducto().startsWith(prefix)) {
 				stockPairs.insert(stockPairs.size() + 1, pair);
 			}
