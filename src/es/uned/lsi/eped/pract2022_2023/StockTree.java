@@ -1,6 +1,10 @@
 package es.uned.lsi.eped.pract2022_2023;
 
-import es.uned.lsi.eped.DataStructures.*;
+import es.uned.lsi.eped.DataStructures.GTreeIF;
+import es.uned.lsi.eped.DataStructures.GTree;
+import es.uned.lsi.eped.DataStructures.IteratorIF;
+import es.uned.lsi.eped.DataStructures.SequenceIF;
+import es.uned.lsi.eped.DataStructures.List;
 
 public class StockTree implements StockIF {
 

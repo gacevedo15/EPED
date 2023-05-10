@@ -10,7 +10,7 @@ public class StockSequence implements StockIF {
 	
 	/* Constructor de la clase */
 	public StockSequence() {
-		this.stock = new List<StockPair>();
+		this.stock = new List<>();
 	}
 
 	/* Devuelve el valor indexado bajo el indice p.
@@ -47,25 +47,6 @@ public class StockSequence implements StockIF {
 		((List<StockPair>) this.stock).insert(getIndex(newPair), newPair);
 	}
 
-	/* Devuelve una secuencia de todos los pares <p,u>
-	 * presentes en el stock tales que:
-	 * -El valor indexado bajo el índice p es u
-	 * -El índice p comienza por la cadena prefix
-	 * Además, la secuencia deberá estar ordenada según
-	 * el orden alfabético de los productos
-	 */
-	public SequenceIF<StockPair> listStock(String prefix) {
-		List<StockPair> stockPairs = new List<StockPair>();
-		IteratorIF<StockPair> iterator = stock.iterator();
-		while(iterator.hasNext()) {
-			StockPair pair = iterator.getNext();
-			if (pair.getProducto().startsWith(prefix)) {
-				stockPairs.insert(stockPairs.size() + 1, pair);
-			}
-		}
-		return stockPairs;
-	}
-
 	/*
 	 * Devuelve la posición en la que se debe insertar el par para que la lista
 	 * quede ordenada alfabéticamente.
@@ -81,5 +62,26 @@ public class StockSequence implements StockIF {
 		}
 		return index;
 	}
+
+	/* Devuelve una secuencia de todos los pares <p,u>
+	 * presentes en el stock tales que:
+	 * -El valor indexado bajo el índice p es u
+	 * -El índice p comienza por la cadena prefix
+	 * Además, la secuencia deberá estar ordenada según
+	 * el orden alfabético de los productos
+	 */
+	public SequenceIF<StockPair> listStock(String prefix) {
+		List<StockPair> stockPairs = new List<>();
+		IteratorIF<StockPair> iterator = stock.iterator();
+		while(iterator.hasNext()) {
+			StockPair pair = iterator.getNext();
+			if (pair.getProducto().startsWith(prefix)) {
+				stockPairs.insert(stockPairs.size() + 1, pair);
+			}
+		}
+		return stockPairs;
+	}
+
+
 
 }
