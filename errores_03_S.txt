@@ -1,0 +1,12 @@
+La linea 59 es diferente en ambos ficheros: 
+	El fichero salida tiene el valor: "listado ca: ", y el fichero esperado tiene: "listado ca: (caleta,29) (carrasca,15)".
+La linea 112 es diferente en ambos ficheros: 
+	El fichero salida tiene el valor: "listado ra: ", y el fichero esperado tiene: "listado ra: (radial,18) (ramonear,42)".
+La linea 224 es diferente en ambos ficheros: 
+	El fichero salida tiene el valor: "listado tr: ", y el fichero esperado tiene: "listado tr: (tribada,15) (trojero,84)".
+La linea 303 es diferente en ambos ficheros: 
+	El fichero salida tiene el valor: "listado enc: ", y el fichero esperado tiene: "listado enc: (encajador,85) (encencerrado,67)".
+La linea 344 es diferente en ambos ficheros: 
+	El fichero salida tiene el valor: "listado yan: ", y el fichero esperado tiene: "listado yan: (yanilla,22) (yantar,14)".
+La linea 363 es diferente en ambos ficheros: 
+	El fichero salida tiene el valor: "listado ch: ", y el fichero esperado tiene: "listado ch: (chagualon,35) (chicote,34) (chorreo,65)".

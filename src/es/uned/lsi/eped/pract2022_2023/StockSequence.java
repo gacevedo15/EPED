@@ -7,7 +7,7 @@ import es.uned.lsi.eped.DataStructures.SequenceIF;
 public class StockSequence implements StockIF {
 
 	protected SequenceIF<StockPair> stock;
-	
+
 	/* Constructor de la clase */
 	public StockSequence() {
 		this.stock = new List<>();
@@ -20,48 +20,61 @@ public class StockSequence implements StockIF {
 	 */
 	public int retrieveStock(String p) {
 		IteratorIF<StockPair> iterator = stock.iterator();
-		while(iterator.hasNext()) {
+
+		while (iterator.hasNext()) {
 			StockPair pair = iterator.getNext();
-			if(pair.getProducto().equals(p)) {
+
+			if (pair.getProducto().equals(p)) {
 				return pair.getUnidades();
 			}
 		}
+
 		return -1;
 	}
 
 	/* Indexa el valor u bajo el indice p.
 	 * @PRE: p != "" y u >= 0
-	 * Si ya habia un valor bajo el mismo indice,
+	 * Si ya había un valor bajo el mismo índice,
 	 * el nuevo valor substituye al anterior.
 	 */
 	public void updateStock(String p, int u) {
-		IteratorIF<StockPair> iterator = stock.iterator();
-		while(iterator.hasNext()) {
-			StockPair pair = iterator.getNext();
-			if(pair.getProducto().equals(p)) {
-				pair.setUnidades(u);
-				return;
-			}
+		if (p == null || p.isEmpty() || u < 0) {
+			return;
 		}
+
 		StockPair newPair = new StockPair(p, u);
-		((List<StockPair>) this.stock).insert(getIndex(newPair), newPair);
+		int index = getIndex(newPair);
+
+		if (index <= stock.size() && ((List<StockPair>) stock).get(index) != null && ((List<StockPair>) stock).get(index).getProducto().equals(p)) {
+			((List<StockPair>) stock).get(index).setUnidades(u);
+		} else {
+			((List<StockPair>) stock).insert(index, newPair);
+		}
 	}
 
-	/*
-	 * Devuelve la posición en la que se debe insertar el par para que la lista
-	 * quede ordenada alfabéticamente.
-	 */
 	private int getIndex(StockPair pair) {
-		int index = 1;
-		while (index <= this.stock.size()) {
-			StockPair currentPair = ((List<StockPair>) this.stock).get(index); // cast a List<StockPair>
-			if (currentPair.getProducto().compareTo(pair.getProducto()) > 0) {
-				return index;
+		int low = 1;
+		int high = stock.size();
+
+		while (low <= high) {
+			int mid = (low + high) / 2;
+			StockPair currentPair = ((List<StockPair>) stock).get(mid);
+
+			int comparison = currentPair.getProducto().compareTo(pair.getProducto());
+			if (comparison == 0) {
+				return mid;
+			} else if (comparison < 0) {
+				low = mid + 1;
+			} else {
+				high = mid - 1;
 			}
-			index++;
 		}
-		return index;
+
+		return low;
 	}
+
+
+
 
 	/* Devuelve una secuencia de todos los pares <p,u>
 	 * presentes en el stock tales que:
@@ -73,15 +86,20 @@ public class StockSequence implements StockIF {
 	public SequenceIF<StockPair> listStock(String prefix) {
 		List<StockPair> stockPairs = new List<>();
 		IteratorIF<StockPair> iterator = stock.iterator();
-		while(iterator.hasNext()) {
+
+		while (iterator.hasNext()) {
 			StockPair pair = iterator.getNext();
+
 			if (pair.getProducto().startsWith(prefix)) {
 				stockPairs.insert(stockPairs.size() + 1, pair);
+			} else if (!pair.getProducto().startsWith(prefix.substring(0, prefix.length() - 1))) {
+				break; // No hay más pares que empiecen por el prefijo
 			}
 		}
+
 		return stockPairs;
 	}
 
 
-
 }
+

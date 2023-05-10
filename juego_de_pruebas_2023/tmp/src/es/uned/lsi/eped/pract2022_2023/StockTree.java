@@ -1,15 +1,11 @@
 package es.uned.lsi.eped.pract2022_2023;
 
-import es.uned.lsi.eped.DataStructures.GTreeIF;
-import es.uned.lsi.eped.DataStructures.GTree;
-import es.uned.lsi.eped.DataStructures.IteratorIF;
-import es.uned.lsi.eped.DataStructures.SequenceIF;
-import es.uned.lsi.eped.DataStructures.List;
+import es.uned.lsi.eped.DataStructures.*;
 
 public class StockTree implements StockIF {
 
 	protected GTreeIF<Node> stock;
-	
+
 	/* Constructor de la clase */
 
 	public StockTree() {
@@ -62,7 +58,7 @@ public class StockTree implements StockIF {
 	 * @PRE: p != "" y u >= 0
 	 * Si ya habia un valor bajo el mismo indice,
 	 * el nuevo valor substituye al anterior.
-	 * 
+	 *
 	 */
 	public void updateStock(String p, int u) {
 		if (p == null || p.isEmpty() || u < 0) {
@@ -104,29 +100,40 @@ public class StockTree implements StockIF {
 		if (!updated) {
 			GTreeIF<Node> hijo = new GTree<>();
 			hijo.setRoot(new NodeInfo(u));
-			int index = getIndex(current, (char) 0);
+			int index = 1;
 			current.addChild(index, hijo);
 		}
 	}
 
 	private int getIndex(GTreeIF<Node> current, char letter) {
-		IteratorIF<GTreeIF<Node>> it = current.getChildren().iterator();
-		int index = 1;
-		while (it.hasNext()) {
-			GTreeIF<Node> child = it.getNext();
+		ListIF<GTreeIF<Node>> children = current.getChildren();
+		int low = 1;
+		int high = children.size();
+
+		while (low <= high) {
+			int mid = low + (high - low) / 2;
+			GTreeIF<Node> child = children.get(mid);
+
 			if (child.getRoot() instanceof NodeInner) {
 				char childLetter = ((NodeInner) child.getRoot()).getLetter();
-				if (childLetter < letter) {
-					index++;
+
+				if (childLetter == letter) {
+					return mid + 1;  // Insert after the matching letter
+				} else if (childLetter < letter) {
+					low = mid + 1;
 				} else {
-					break;
+					high = mid - 1;
 				}
-			} else if (child.getRoot() instanceof NodeInfo) {
-				index++;
+			} else {
+				// We reached a NodeInfo, so insert before it
+				return mid;
 			}
 		}
-		return index;
+
+		// If we reach this point, it means the letter should be inserted at the end
+		return low;
 	}
+
 
 
 	/* Devuelve una secuencia de todos los pares <p,u>

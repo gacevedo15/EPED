@@ -1,15 +1,11 @@
 package es.uned.lsi.eped.pract2022_2023;
 
-import es.uned.lsi.eped.DataStructures.GTreeIF;
-import es.uned.lsi.eped.DataStructures.GTree;
-import es.uned.lsi.eped.DataStructures.IteratorIF;
-import es.uned.lsi.eped.DataStructures.SequenceIF;
-import es.uned.lsi.eped.DataStructures.List;
+import es.uned.lsi.eped.DataStructures.*;
 
 public class StockTree implements StockIF {
 
 	protected GTreeIF<Node> stock;
-	
+
 	/* Constructor de la clase */
 
 	public StockTree() {
@@ -62,7 +58,7 @@ public class StockTree implements StockIF {
 	 * @PRE: p != "" y u >= 0
 	 * Si ya habia un valor bajo el mismo indice,
 	 * el nuevo valor substituye al anterior.
-	 * 
+	 *
 	 */
 	public void updateStock(String p, int u) {
 		if (p == null || p.isEmpty() || u < 0) {
@@ -104,7 +100,7 @@ public class StockTree implements StockIF {
 		if (!updated) {
 			GTreeIF<Node> hijo = new GTree<>();
 			hijo.setRoot(new NodeInfo(u));
-			int index = getIndex(current, (char) 0);
+			int index = 1;
 			current.addChild(index, hijo);
 		}
 	}
@@ -127,6 +123,7 @@ public class StockTree implements StockIF {
 		}
 		return index;
 	}
+
 
 
 	/* Devuelve una secuencia de todos los pares <p,u>
