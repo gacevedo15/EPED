@@ -81,7 +81,7 @@ public class Main {
 		return result.toString();
 	}
 	
-	
+
 	public static void main(String[] args) throws IOException {
 		
 		if ( args.length != 3 ) {

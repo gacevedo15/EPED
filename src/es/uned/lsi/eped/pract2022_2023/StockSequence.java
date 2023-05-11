@@ -19,13 +19,20 @@ public class StockSequence implements StockIF {
 	 * devuelve el valor -1.
 	 */
 	public int retrieveStock(String p) {
-		IteratorIF<StockPair> iterator = stock.iterator();
+		int low = 1;  // Inicio del rango (posición 1)
+		int high = stock.size();
 
-		while (iterator.hasNext()) {
-			StockPair pair = iterator.getNext();
+		while (low <= high) {
+			int mid = low + (high - low) / 2;
+			StockPair pair = ((List<StockPair>) stock).get(mid);
 
-			if (pair.getProducto().equals(p)) {
+			int comparison = pair.getProducto().compareTo(p);
+			if (comparison == 0) {
 				return pair.getUnidades();
+			} else if (comparison < 0) {
+				low = mid + 1;
+			} else {
+				high = mid - 1;
 			}
 		}
 
@@ -73,9 +80,6 @@ public class StockSequence implements StockIF {
 		return low;
 	}
 
-
-
-
 	/* Devuelve una secuencia de todos los pares <p,u>
 	 * presentes en el stock tales que:
 	 * -El valor indexado bajo el índice p es u
@@ -92,8 +96,8 @@ public class StockSequence implements StockIF {
 
 			if (pair.getProducto().startsWith(prefix)) {
 				stockPairs.insert(stockPairs.size() + 1, pair);
-			} else if (!pair.getProducto().startsWith(prefix.substring(0, prefix.length() - 1))) {
-				break; // No hay más pares que empiecen por el prefijo
+			} else if (pair.getProducto().compareTo(prefix) > 0) {
+				break; // El elemento es mayor que el prefijo, no hay más elementos con ese prefijo
 			}
 		}
 

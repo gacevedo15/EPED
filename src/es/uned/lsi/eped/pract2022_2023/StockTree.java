@@ -124,8 +124,6 @@ public class StockTree implements StockIF {
 		return index;
 	}
 
-
-
 	/* Devuelve una secuencia de todos los pares <p,u>
 	 * presentes en el stock tales que:
 	 * -El valor indexado bajo el índice p es u

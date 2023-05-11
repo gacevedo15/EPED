@@ -106,35 +106,23 @@ public class StockTree implements StockIF {
 	}
 
 	private int getIndex(GTreeIF<Node> current, char letter) {
-		ListIF<GTreeIF<Node>> children = current.getChildren();
-		int low = 1;
-		int high = children.size();
-
-		while (low <= high) {
-			int mid = low + (high - low) / 2;
-			GTreeIF<Node> child = children.get(mid);
-
+		IteratorIF<GTreeIF<Node>> it = current.getChildren().iterator();
+		int index = 1;
+		while (it.hasNext()) {
+			GTreeIF<Node> child = it.getNext();
 			if (child.getRoot() instanceof NodeInner) {
 				char childLetter = ((NodeInner) child.getRoot()).getLetter();
-
-				if (childLetter == letter) {
-					return mid + 1;  // Insert after the matching letter
-				} else if (childLetter < letter) {
-					low = mid + 1;
+				if (childLetter < letter) {
+					index++;
 				} else {
-					high = mid - 1;
+					break;
 				}
-			} else {
-				// We reached a NodeInfo, so insert before it
-				return mid;
+			} else if (child.getRoot() instanceof NodeInfo) {
+				index++;
 			}
 		}
-
-		// If we reach this point, it means the letter should be inserted at the end
-		return low;
+		return index;
 	}
-
-
 
 	/* Devuelve una secuencia de todos los pares <p,u>
 	 * presentes en el stock tales que:
