@@ -59,6 +59,9 @@ public class StockSequence implements StockIF {
 		}
 	}
 
+	/*
+	 * Devuelve el índice en el que se encuentra el par utilizando búsqueda binaria
+	 */
 	private int getIndex(StockPair pair) {
 		int low = 1;
 		int high = stock.size();

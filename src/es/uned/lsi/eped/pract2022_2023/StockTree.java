@@ -105,6 +105,10 @@ public class StockTree implements StockIF {
 		}
 	}
 
+	/*
+	 * Devuelve el índice del hijo que debería tener el nodo actual
+	 * para que el arbol esté ordenado alfabéticamente
+	 */
 	private int getIndex(GTreeIF<Node> current, char letter) {
 		IteratorIF<GTreeIF<Node>> it = current.getChildren().iterator();
 		int index = 1;
